@@ -1,0 +1,36 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<dom-module id="404-page">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]!</h2>
+  </template>
+
+  <script>
+    /**
+     * `404-page`
+     * 
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class 404Page extends Polymer.Element {
+      static get is() { return '404-page'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: '404-page'
+          }
+        };
+      }
+    }
+
+    window.customElements.define(404Page.is, 404Page);
+  </script>
+</dom-module>

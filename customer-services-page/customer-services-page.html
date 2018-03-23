@@ -1,0 +1,36 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<dom-module id="customer-services-page">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]!</h2>
+  </template>
+
+  <script>
+    /**
+     * `customer-services-page`
+     * 
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class CustomerServicesPage extends Polymer.Element {
+      static get is() { return 'customer-services-page'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'customer-services-page'
+          }
+        };
+      }
+    }
+
+    window.customElements.define(CustomerServicesPage.is, CustomerServicesPage);
+  </script>
+</dom-module>

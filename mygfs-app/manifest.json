@@ -1,0 +1,6 @@
+{
+  "name": "mygfs",
+  "short_name": "mygfs",
+  "start_url": "/",
+  "display": "standalone"
+}

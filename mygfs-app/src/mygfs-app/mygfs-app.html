@@ -1,0 +1,113 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/app-route/app-location.html">
+<link rel="import" href="../../bower_components/app-route/app-route.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/app-route-debugger/app-route-debugger.html">
+
+<!-- Lazy load pages -->
+<link rel="lazy-import" href="../../bower_components/shipment-page/shipment-page.html">
+<link rel="lazy-import" href="../../bower_components/customer-services-page/customer-services-page.html">
+<link rel="lazy-import" href="../../bower_components/collections-page/collections-page.html">
+<link rel="lazy-import" href="../../bower_components/mygfs-404-page/mygfs-404-page.html">
+
+<dom-module id="mygfs-app">
+  <template>
+
+    <app-location route="{{route}}"
+      url-space-regex="^[[rootPath]]"
+      query-params="{{queryParams}}"></app-location>
+    <app-route
+      route="{{route}}"
+      pattern="[[rootPath]]:page",
+      data="{{data}}",
+      tail="{{tail}}"></app-route>
+
+    <app-route-debugger route="[[route]]"
+      route-data="[[data]]"
+      is-enabled></app-route-debugger>
+
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]!</h2>
+    <a href="[[rootPath]]shipment">Shipments</a>
+    <a href="[[rootPath]]customerServices">Customer Services</a>
+    <a href="[[rootPath]]collections">Collections</a>
+    <iron-pages selected="[[page]]"
+                attr-for-selected="name"
+                role="main">
+      <shipment-page name="shipment" route="{{tail}}"></shipment-page>
+      <customer-services-page name="customerServices"></customer-services-page>
+      <collections-page name="collections"></collections-page>
+    </iron-pages>
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class MygfsApp extends Polymer.Element {
+      static get is() { return 'mygfs-app'; }
+      static get properties() {
+        return {
+          rootPath: {
+            type: String,
+            value: '/components/'
+          },
+          route: Object,
+          queryParams: Object,
+          data: Object,
+          tail: Object,
+          page: {
+            type: String,
+            reflectedToAttribute: true,
+            observer: '_pageChanged'
+          },
+          pages: {
+            type: Array,
+            value: [
+              {page: 'page404', url: 'mygfs-404-page/mygfs-404-page.html'},              
+              {page: 'shipment', url: 'shipment-page/shipment-page.html'}, 
+              {page: 'customerServices', url: 'customer-services-page/customer-services-page.html'},
+              {page: 'collections', url: 'collections-page/collections-page.html'},
+              {page: 'userAccounts', url: 'fred'},
+              {page: 'billing', url: 'fred'},
+              {page: 'claims', url: 'fred'},
+              {page: 'systemStatus', url: 'fred'}              
+            ]
+          }
+        }
+      }
+
+      static get observers() {
+        return [
+          '_routePageChanged(data.page)',
+        ];
+      }
+
+      _pageChanged(page) {
+        // Resolve the location path to a page component, and load it on demand.
+        const resolvedPageUrl= this.pages.find(p => p.page == page);
+      
+        Polymer.importHref(
+          '../../bower_components/' + resolvedPageUrl.url,
+          null,
+          this._show404.bind(this),
+          true);
+      }
+
+      _routePageChanged(page) {
+        this.page = page || 'shipment';
+      }
+
+      _show404() {
+        this.page = 'page404';
+      }
+    }
+
+    window.customElements.define(MygfsApp.is, MygfsApp);
+  </script>
+</dom-module>

@@ -1,0 +1,18 @@
+{
+  "name": "mygfs",
+  "main": "index.html",
+  "dependencies": {
+    "polymer": "Polymer/polymer#^2.0.0",
+    "app-route": "PolymerElements/app-route#^2.0.3",
+    "shipment-page": "../shipment-page",
+    "customer-services-page": "../customer-services-page",
+    "collections-page": "../collections-page",
+    "iron-pages": "PolymerElements/iron-pages#^2.1.0",
+    "mygfs-404-page": "../mygfs-404-page",
+    "app-route-debugger": "../../app-route-debugger"
+  },
+  "devDependencies": {
+    "web-component-tester": "Polymer/web-component-tester#^6.0.0",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0"
+  }
+}

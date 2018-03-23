@@ -1,0 +1,36 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<dom-module id="mygfs-404-page">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>I'm sorry Dave, I don't know where to find that :(</h2>
+  </template>
+
+  <script>
+    /**
+     * `mygfs-404-page`
+     * 
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class Mygfs404Page extends Polymer.Element {
+      static get is() { return 'mygfs-404-page'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'mygfs-404-page'
+          }
+        };
+      }
+    }
+
+    window.customElements.define(Mygfs404Page.is, Mygfs404Page);
+  </script>
+</dom-module>

@@ -1,0 +1,102 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../app-route/app-route.html">
+<link rel="import" href="../paper-tabs/paper-tabs.html">
+<link rel="import" href="../paper-tabs/paper-tab.html">
+<link rel="import" href="../iron-pages/iron-pages.html">
+
+<dom-module id="shipment-page">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      .link{
+        @apply --layout-horizontal;
+        @apply --layout-center-center;
+      }
+    </style>
+
+    <app-route
+      route="{{route}}"
+      pattern="/:page"
+      data="{{data}}"
+      tail="{{tail}}">
+    </app-route>
+
+  <!--  <div>Route: {{printRoute}}</div>
+    <div>Data: {{printData}}</div>
+    <div>Page: {{data.page}}</div> -->
+    
+    <paper-tabs attr-for-selected="name" selected="{{view}}">
+      <paper-tab link name="shipmentSearch"><a href="{{route.prefix}}/shipmentSearch">Shipment Search</a></paper-tab>
+      <paper-tab link name="advancedSearch"><a href="{{route.prefix}}/advancedSearch">Advanced Search</a></paper-tab>
+      <paper-tab link name="reports"><a href="{{route.prefix}}/reports">Scheduled Reports</a></paper-tab>
+    </paper-tabs>
+
+    <iron-pages selected="[[view]]"
+                attr-for-selected="name"
+                role="main">
+      <div name="shipmentSearch"><h3>Shipment Search Form</h3></div>
+      <div name="advancedSearch"><h3>Advanced shipment Search Form</h3></div>
+      <div name="reports"><h3>Scheduled reports Form</h3></div>
+    </iron-pages>
+
+
+</template>
+
+  <script>
+    /**
+     * `shipment-page`
+     * 
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class ShipmentPage extends Polymer.Element {
+      static get is() { return 'shipment-page'; }
+      static get properties() {
+        return {
+          view: {
+            type: String,
+            value: 'shipmentSearch',
+            observer: '_viewChanged'
+          },
+          route: Object,
+          printRoute: {
+            type: String,
+            computed: '_getPrintRoute(route)'
+          },
+          printData: {
+            type: String,
+            computed: '_getPrintData(data)'
+          }
+        };
+      }
+
+      static get observers() {
+        return [
+          '_routePageChanged(data.page)',
+        ];
+      }
+
+      _getPrintRoute(route) {
+        return JSON.stringify(route, null, 2);
+      }
+
+      _getPrintData(data) {
+        return JSON.stringify(data, null, 2);
+      }
+
+      _routePageChanged(page) {
+        this.view = page || 'shipmentSearch'
+      }
+
+      _viewChanged(view) {
+      }
+    }
+
+    window.customElements.define(ShipmentPage.is, ShipmentPage);
+  </script>
+</dom-module>
